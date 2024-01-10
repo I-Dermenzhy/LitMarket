@@ -21,4 +21,11 @@ public class Order : IModel
     [ForeignKey(nameof(CustomerId))]
     [ValidateNever]
     public Customer Customer { get; set; }
+
+    [Required]
+    public string PaymentId { get; set; }
+
+    [ForeignKey(nameof(PaymentId))]
+    [ValidateNever]
+    public Payment Payment { get; set; }
 }
