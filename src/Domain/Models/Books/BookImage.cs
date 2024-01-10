@@ -10,25 +10,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Models.Products;
 
 #pragma warning disable CS8618 
-public class Product : IModel
+public class BookImage : IModel
 {
-    [Key]
     public int Id { get; set; }
+
+    [Required]
+    public string Url { get; set; }
+
+    [Required]
+    public BookImageType ImageType { get; set; }
 
     [Required]
     public int BookId { get; set; }
 
     [ValidateNever]
     [ForeignKey(nameof(BookId))]
-    public Book Book { get; set; }
+    public virtual Book Book { get; set; }
+}
 
-    [Required]
-    public int PriceListId { get; set; }
-
-    [ValidateNever]
-    [ForeignKey(nameof(PriceListId))]
-    public PriceList PriceList { get; set; }
-
-    [MaxLength(100)]
-    public string? ImageUrl { get; set; }
+public enum BookImageType
+{
+    FrontCover,
+    BackCover,
+    Content,
 }

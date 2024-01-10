@@ -1,4 +1,6 @@
-﻿using LitMarket.Domain.Models;
+﻿using Domain.Models.Products;
+
+using LitMarket.Domain.Models;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
@@ -25,13 +27,20 @@ public class Book : IModel
     public string Author { get; set; }
 
     [Required]
+    [MaxLength(20)]
+    public string ISBN { get; set; }
+
+    [Required]
     public int CategoryId { get; set; }
 
     [ValidateNever]
     [ForeignKey(nameof(CategoryId))]
-    public Category Category { get; set; }
+    public BookCategory Category { get; set; }
 
     [Required]
-    [MaxLength(20)]
-    public string ISBN { get; set; }
+    public int PriceListId { get; set; }
+
+    [ValidateNever]
+    [ForeignKey(nameof(PriceListId))]
+    public PriceList PriceList { get; set; }
 }
