@@ -1,7 +1,5 @@
 ﻿using Domain.Models.Users;
 
-using LitMarket.Domain.Models;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +19,13 @@ public class Order : IModel
     [ForeignKey(nameof(CustomerId))]
     [ValidateNever]
     public Customer Customer { get; set; }
+
+    [Required]
+    public string DeliveryId { get; set; }
+
+    [ForeignKey(nameof(DeliveryId))]
+    [ValidateNever]
+    public Delivery Delivery { get; set; }
 
     public IEnumerable<OrderItem> Items { get; set; }
 
