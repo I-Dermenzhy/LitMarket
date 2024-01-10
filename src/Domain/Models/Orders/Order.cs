@@ -21,11 +21,11 @@ public class Order : IModel
     public Customer Customer { get; set; }
 
     [Required]
-    public string DeliveryId { get; set; }
+    public string ShippingId { get; set; }
 
-    [ForeignKey(nameof(DeliveryId))]
+    [ForeignKey(nameof(ShippingId))]
     [ValidateNever]
-    public Delivery Delivery { get; set; }
+    public Shipping Shipping { get; set; }
 
     public IEnumerable<OrderItem> Items { get; set; }
 

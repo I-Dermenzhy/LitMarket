@@ -8,18 +8,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Models.Orders;
 
 #pragma warning disable CS8618
-public class Delivery : IModel
+public class Shipping : IModel
 {
     [Key]
     public int Id { get; set; }
 
+    public DateOnly ArrivalDate { get; set; }
+
     [MaxLength(40)]
     public string? Carrier { get; set; }
-
-    [Required]
-    public FullAddress DeliveryAddress { get; set; }
-
-    public DateTime DeliveryDate { get; set; }
 
     [Required]
     public string OrderId { get; set; }
@@ -30,4 +27,9 @@ public class Delivery : IModel
 
     [MaxLength(20)]
     public string? TrackingNumber { get; set; }
+
+    [Required]
+    public FullAddress ShippingAddress { get; set; }
+
+    public DateTime ShippingDate { get; set; }
 }

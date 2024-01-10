@@ -18,10 +18,10 @@ public class LibMarketDbContext(DbContextOptions<LibMarketDbContext> options)
 
     public DbSet<Customer> Customers => Set<Customer>();
 
-    public DbSet<Delivery> Deliveries => Set<Delivery>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<Shipping> Shippings => Set<Shipping>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
