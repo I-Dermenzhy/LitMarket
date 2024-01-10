@@ -14,4 +14,13 @@ public class Customer : IdentityUser, IModel<string>
     [Required]
     [MaxLength(50)]
     public string Name { get; set; }
+
+    [Required]
+    public CustomerType CustomerType { get; set; }
+}
+
+public enum CustomerType
+{
+    Individual,
+    Company
 }
