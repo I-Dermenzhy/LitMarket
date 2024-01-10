@@ -15,17 +15,17 @@ public class BookImage : IModel
     public int Id { get; set; }
 
     [Required]
-    public string Url { get; set; }
-
-    [Required]
-    public BookImageType ImageType { get; set; }
-
-    [Required]
     public int BookId { get; set; }
 
     [ValidateNever]
     [ForeignKey(nameof(BookId))]
     public virtual Book Book { get; set; }
+
+    [Required]
+    public BookImageType ImageType { get; set; }
+
+    [Required]
+    public string Url { get; set; }
 }
 
 public enum BookImageType

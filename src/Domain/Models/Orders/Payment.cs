@@ -13,17 +13,8 @@ public class Payment : IModel
     [Key]
     public int Id { get; set; }
 
-    public DateTime Date { get; set; }
+    public DateTime ApprovementDate { get; set; }
     public DateOnly DueDate { get; set; }
-
-    [MaxLength(40)]
-    public PaymentStatus Status { get; set; }
-
-    [MaxLength(100)]
-    public string? SessionId { get; set; }
-
-    [MaxLength(100)]
-    public string? PaymentIntentId { get; set; }
 
     [Required]
     public string OrderId { get; set; }
@@ -31,6 +22,15 @@ public class Payment : IModel
     [ForeignKey(nameof(OrderId))]
     [ValidateNever]
     public Order Order { get; set; }
+
+    [MaxLength(100)]
+    public string? PaymentIntentId { get; set; }
+
+    [MaxLength(40)]
+    public PaymentStatus Status { get; set; }
+
+    [MaxLength(100)]
+    public string? SessionId { get; set; }
 }
 
 public enum PaymentStatus

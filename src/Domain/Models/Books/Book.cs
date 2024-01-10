@@ -16,19 +16,8 @@ public class Book : IModel
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(80)]
-    public string Title { get; set; }
-
-    [MaxLength(10000)]
-    public string? Description { get; set; }
-
-    [Required]
     [MaxLength(50)]
     public string Author { get; set; }
-
-    [Required]
-    [MaxLength(20)]
-    public string ISBN { get; set; }
 
     [Required]
     public int CategoryId { get; set; }
@@ -37,10 +26,21 @@ public class Book : IModel
     [ForeignKey(nameof(CategoryId))]
     public BookCategory Category { get; set; }
 
+    [MaxLength(10000)]
+    public string? Description { get; set; }
+
+    [Required]
+    [MaxLength(20)]
+    public string ISBN { get; set; }
+
     [Required]
     public int PriceListId { get; set; }
 
     [ValidateNever]
     [ForeignKey(nameof(PriceListId))]
     public PriceList PriceList { get; set; }
+
+    [Required]
+    [MaxLength(80)]
+    public string Title { get; set; }
 }
