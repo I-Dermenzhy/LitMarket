@@ -4,9 +4,9 @@ namespace Abstractions.Repositories.Orders;
 
 public interface IOrderRepository : IModelRepository<Order>
 {
-    public IEnumerable<Order> GetByOrderStatus(string status, string? userId = null);
-    public IEnumerable<Order> GetByPaymentStatus(string status, string? userId = null);
-    public IEnumerable<Order> GetByUser(string userId);
+    public IEnumerable<Order> GetByOrderStatus(OrderStatus status, string? customerId = null);
+    public IEnumerable<Order> GetByPaymentStatus(PaymentStatus status, string? customerId = null);
+    public IEnumerable<Order> GetByCustomer(string customerId);
 
-    public void UpdateStatus(int id, string orderStatus);
+    public void UpdateStatus(int id, OrderStatus orderStatus);
 }
