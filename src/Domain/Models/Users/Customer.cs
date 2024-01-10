@@ -1,6 +1,4 @@
-﻿using LitMarket.Domain.Models;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 using System.ComponentModel.DataAnnotations;
 

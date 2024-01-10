@@ -1,6 +1,4 @@
-﻿using LitMarket.Domain.Models;
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models.Books;

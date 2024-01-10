@@ -22,6 +22,8 @@ public class Order : IModel
     [ValidateNever]
     public Customer Customer { get; set; }
 
+    public IEnumerable<OrderItem> Items { get; set; }
+
     [Required]
     public string PaymentId { get; set; }
 
@@ -33,5 +35,16 @@ public class Order : IModel
     [Range(0, 100000)]
     public double TotalPrice { get; set; }
 
-    public IEnumerable<OrderItem> Items { get; set; }
+    [Required]
+    public OrderStatus Status { get; set; }
+}
+
+public enum OrderStatus
+{
+    Pending,
+    Approved,
+    Processing,
+    Cancelled,
+    Shipped,
+    Delivered
 }

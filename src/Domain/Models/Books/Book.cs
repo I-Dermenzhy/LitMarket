@@ -1,7 +1,5 @@
 ﻿using Domain.Models.Products;
 
-using LitMarket.Domain.Models;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 using System.ComponentModel.DataAnnotations;

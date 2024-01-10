@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LitMarket.Domain.Models;
+namespace Domain.Models;
 
 public interface IModel<T>
 {
