@@ -28,4 +28,10 @@ public class Order : IModel
     [ForeignKey(nameof(PaymentId))]
     [ValidateNever]
     public Payment Payment { get; set; }
+
+    [Required]
+    [Range(0, 100000)]
+    public double TotalPrice { get; set; }
+
+    public IEnumerable<OrderItem> Items { get; set; }
 }
