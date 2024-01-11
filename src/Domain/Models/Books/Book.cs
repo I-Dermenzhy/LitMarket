@@ -27,6 +27,8 @@ public class Book : IModel
     [MaxLength(10000)]
     public string? Description { get; set; }
 
+    public IEnumerable<BookImage> Images { get; set; }
+
     [Required]
     [MaxLength(20)]
     public string ISBN { get; set; }
