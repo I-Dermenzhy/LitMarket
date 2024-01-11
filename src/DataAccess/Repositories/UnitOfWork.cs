@@ -15,6 +15,7 @@ public sealed class UnitOfWork(
     IOrderItemRepository orderItemRepository,
     IOrderRepository orderRepository,
     IPaymentRepository paymentRepository,
+    IPriceListRepository priceListRepository,
     IShippingRepository shippingRepository)
 {
     private readonly LibMarketDbContext _db = db;
@@ -26,6 +27,7 @@ public sealed class UnitOfWork(
     public IOrderItemRepository OrderItemRepository { get; } = orderItemRepository;
     public IOrderRepository OrderRepository { get; } = orderRepository;
     public IPaymentRepository PaymentRepository { get; } = paymentRepository;
+    public IPriceListRepository PriceListRepository { get; } = priceListRepository;
     public IShippingRepository ShippingRepository { get; } = shippingRepository;
 
     public void Save() => _db.SaveChanges();
