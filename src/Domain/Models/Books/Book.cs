@@ -22,12 +22,12 @@ public class Book : IModel
 
     [ValidateNever]
     [ForeignKey(nameof(CategoryId))]
-    public BookCategory Category { get; set; }
+    public virtual BookCategory Category { get; set; }
 
     [MaxLength(10000)]
     public string? Description { get; set; }
 
-    public IEnumerable<BookImage> Images { get; set; }
+    public virtual IEnumerable<BookImage> Images { get; set; }
 
     [Required]
     [MaxLength(20)]
@@ -38,7 +38,7 @@ public class Book : IModel
 
     [ValidateNever]
     [ForeignKey(nameof(PriceListId))]
-    public PriceList PriceList { get; set; }
+    public virtual PriceList PriceList { get; set; }
 
     [Required]
     [MaxLength(80)]

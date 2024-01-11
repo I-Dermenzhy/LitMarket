@@ -18,23 +18,23 @@ public class Order : IModel
 
     [ForeignKey(nameof(CustomerId))]
     [ValidateNever]
-    public Customer Customer { get; set; }
+    public virtual Customer Customer { get; set; }
 
     [Required]
     public string ShippingId { get; set; }
 
     [ForeignKey(nameof(ShippingId))]
     [ValidateNever]
-    public Shipping Shipping { get; set; }
+    public virtual Shipping Shipping { get; set; }
 
-    public IEnumerable<OrderItem> Items { get; set; }
+    public virtual IEnumerable<OrderItem> Items { get; set; }
 
     [Required]
     public string PaymentId { get; set; }
 
     [ForeignKey(nameof(PaymentId))]
     [ValidateNever]
-    public Payment Payment { get; set; }
+    public virtual Payment Payment { get; set; }
 
     [Required]
     [Range(0, 100000)]

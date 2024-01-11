@@ -19,7 +19,7 @@ public class Payment : IModel
 
     [ForeignKey(nameof(OrderId))]
     [ValidateNever]
-    public Order Order { get; set; }
+    public virtual Order Order { get; set; }
 
     [MaxLength(100)]
     public string? PaymentIntentId { get; set; }
