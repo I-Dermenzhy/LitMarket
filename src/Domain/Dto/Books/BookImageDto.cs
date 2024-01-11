@@ -1,4 +1,4 @@
-﻿using Domain.Models.Products;
+﻿using Domain.Models.Books;
 
 namespace Domain.Dto.Books;
 

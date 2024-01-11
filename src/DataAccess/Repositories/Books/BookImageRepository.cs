@@ -3,7 +3,7 @@
 using DataAccess.Data;
 using DataAccess.Exceptions;
 
-using Domain.Models.Products;
+using Domain.Models.Books;
 
 namespace DataAccess.Repositories.Books;
 
