@@ -19,7 +19,7 @@ public class Shipping : IModel
     public string? Carrier { get; set; }
 
     [Required]
-    public string OrderId { get; set; }
+    public int OrderId { get; set; }
 
     [ForeignKey(nameof(OrderId))]
     [ValidateNever]
