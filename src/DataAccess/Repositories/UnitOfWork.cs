@@ -1,5 +1,6 @@
 ﻿using Abstractions.Repositories;
 using Abstractions.Repositories.Books;
+using Abstractions.Repositories.Carts;
 using Abstractions.Repositories.Orders;
 using Abstractions.Repositories.Users;
 
@@ -9,6 +10,7 @@ namespace DataAccess.Repositories;
 
 public sealed class UnitOfWork(
     LitMarketDbContext db,
+    IBookCartRepository bookCartRepository,
     IBookCategoryRepository bookCategoryRepository,
     IBookImageRepository bookImageRepository,
     IBookRepository bookRepository,
@@ -21,6 +23,7 @@ public sealed class UnitOfWork(
 {
     private readonly LitMarketDbContext _db = db;
 
+    public IBookCartRepository BookCarts { get; } = bookCartRepository;
     public IBookCategoryRepository BookCategories { get; } = bookCategoryRepository;
     public IBookImageRepository BookImages { get; } = bookImageRepository;
     public IBookRepository Books { get; } = bookRepository;
