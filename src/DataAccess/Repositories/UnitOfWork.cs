@@ -1,4 +1,5 @@
-﻿using Abstractions.Repositories.Books;
+﻿using Abstractions.Repositories;
+using Abstractions.Repositories.Books;
 using Abstractions.Repositories.Orders;
 using Abstractions.Repositories.Users;
 
@@ -16,19 +17,19 @@ public sealed class UnitOfWork(
     IOrderRepository orderRepository,
     IPaymentRepository paymentRepository,
     IPriceListRepository priceListRepository,
-    IShippingRepository shippingRepository)
+    IShippingRepository shippingRepository) : IUnitOfWork
 {
     private readonly LitMarketDbContext _db = db;
 
-    public IBookCategoryRepository BookCategoryRepository { get; } = bookCategoryRepository;
-    public IBookImageRepository BookImageRepository { get; } = bookImageRepository;
-    public IBookRepository BookRepository { get; } = bookRepository;
-    public ICustomerRepository CustomerRepository { get; } = customerRepository;
-    public IOrderItemRepository OrderItemRepository { get; } = orderItemRepository;
-    public IOrderRepository OrderRepository { get; } = orderRepository;
-    public IPaymentRepository PaymentRepository { get; } = paymentRepository;
-    public IPriceListRepository PriceListRepository { get; } = priceListRepository;
-    public IShippingRepository ShippingRepository { get; } = shippingRepository;
+    public IBookCategoryRepository BookCategories { get; } = bookCategoryRepository;
+    public IBookImageRepository BookImages { get; } = bookImageRepository;
+    public IBookRepository Books { get; } = bookRepository;
+    public ICustomerRepository Customers { get; } = customerRepository;
+    public IOrderItemRepository OrderItems { get; } = orderItemRepository;
+    public IOrderRepository Orders { get; } = orderRepository;
+    public IPaymentRepository Payments { get; } = paymentRepository;
+    public IPriceListRepository PriceLists { get; } = priceListRepository;
+    public IShippingRepository Shippings { get; } = shippingRepository;
 
     public void Save() => _db.SaveChanges();
 }
