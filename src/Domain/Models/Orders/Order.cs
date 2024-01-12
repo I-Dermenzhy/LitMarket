@@ -30,7 +30,7 @@ public class Order : IModel
     public virtual IEnumerable<OrderItem> Items { get; set; }
 
     [Required]
-    public string PaymentId { get; set; }
+    public int PaymentId { get; set; }
 
     [ForeignKey(nameof(PaymentId))]
     [ValidateNever]
