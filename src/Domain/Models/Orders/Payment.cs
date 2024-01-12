@@ -15,7 +15,7 @@ public class Payment : IModel
     public DateOnly DueDate { get; set; }
 
     [Required]
-    public string OrderId { get; set; }
+    public int OrderId { get; set; }
 
     [ForeignKey(nameof(OrderId))]
     [ValidateNever]
