@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(LitMarketDbContext))]
-    [Migration("20240112155343_Init")]
+    [Migration("20240112160738_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -300,9 +300,6 @@ namespace DataAccess.Migrations
                     b.Property<DateOnly>("DueDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PaymentIntentId")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -316,8 +313,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Payments");
                 });
@@ -337,9 +332,6 @@ namespace DataAccess.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
 
@@ -348,8 +340,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Shippings");
                 });
@@ -727,25 +717,8 @@ namespace DataAccess.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Domain.Models.Orders.Payment", b =>
-                {
-                    b.HasOne("Domain.Models.Orders.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Domain.Models.Orders.Shipping", b =>
                 {
-                    b.HasOne("Domain.Models.Orders.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.OwnsOne("Domain.Models.Users.FullAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("ShippingId")
@@ -776,8 +749,6 @@ namespace DataAccess.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ShippingId");
                         });
-
-                    b.Navigation("Order");
 
                     b.Navigation("ShippingAddress")
                         .IsRequired();

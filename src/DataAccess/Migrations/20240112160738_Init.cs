@@ -74,6 +74,23 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApprovementDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DueDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    PaymentIntentId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Status = table.Column<int>(type: "int", maxLength: 40, nullable: false),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PriceList",
                 columns: table => new
                 {
@@ -87,6 +104,26 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PriceList", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shippings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ArrivalDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Carrier = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ShippingAddress_Country = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    ShippingAddress_City = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    ShippingAddress_PostalCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    ShippingAddress_StreetAddress = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    ShippingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shippings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,6 +263,41 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShippingId = table.Column<int>(type: "int", nullable: false),
+                    PaymentId = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Shippings_ShippingId",
+                        column: x => x.ShippingId,
+                        principalTable: "Shippings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookImages",
                 columns: table => new
                 {
@@ -266,76 +338,8 @@ namespace DataAccess.Migrations
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ShippingId = table.Column<int>(type: "int", nullable: false),
-                    PaymentId = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ApprovementDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DueDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Status = table.Column<int>(type: "int", maxLength: 40, nullable: false),
-                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Payments_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Shippings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ArrivalDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Carrier = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    ShippingAddress_Country = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    ShippingAddress_City = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    ShippingAddress_PostalCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
-                    ShippingAddress_StreetAddress = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    ShippingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shippings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Shippings_Orders_OrderId",
+                        name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
@@ -460,57 +464,11 @@ namespace DataAccess.Migrations
                 name: "IX_Orders_ShippingId",
                 table: "Orders",
                 column: "ShippingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_OrderId",
-                table: "Payments",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shippings_OrderId",
-                table: "Shippings",
-                column: "OrderId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_OrderItems_Orders_OrderId",
-                table: "OrderItems",
-                column: "OrderId",
-                principalTable: "Orders",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Payments_PaymentId",
-                table: "Orders",
-                column: "PaymentId",
-                principalTable: "Payments",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Shippings_ShippingId",
-                table: "Orders",
-                column: "ShippingId",
-                principalTable: "Shippings",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Orders_AspNetUsers_CustomerId",
-                table: "Orders");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Payments_Orders_OrderId",
-                table: "Payments");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Shippings_Orders_OrderId",
-                table: "Shippings");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -539,6 +497,9 @@ namespace DataAccess.Migrations
                 name: "Books");
 
             migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "BookCategories");
 
             migrationBuilder.DropTable(
@@ -546,9 +507,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Payments");
