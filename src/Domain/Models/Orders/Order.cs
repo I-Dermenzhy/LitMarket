@@ -21,7 +21,7 @@ public class Order : IModel
     public virtual Customer Customer { get; set; }
 
     [Required]
-    public string ShippingId { get; set; }
+    public int ShippingId { get; set; }
 
     [ForeignKey(nameof(ShippingId))]
     [ValidateNever]
