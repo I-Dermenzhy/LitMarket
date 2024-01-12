@@ -19,10 +19,10 @@ public static class IServiceCollectionExtensions
     public static void AddLitMarketRepositories(this IServiceCollection services)
     {
         services.AddScoped<IBookCartRepository, BookCartRepository>();
-        services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
         services.AddScoped<IBookImageRepository, BookImageRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IGenreRepository, BookCategoryRepository>();
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();

@@ -11,10 +11,10 @@ namespace DataAccess.Repositories;
 public sealed class UnitOfWork(
     LitMarketDbContext db,
     IBookCartRepository bookCartRepository,
-    IBookCategoryRepository bookCategoryRepository,
     IBookImageRepository bookImageRepository,
     IBookRepository bookRepository,
     ICustomerRepository customerRepository,
+    IGenreRepository genreRepository,
     IOrderItemRepository orderItemRepository,
     IOrderRepository orderRepository,
     IPaymentRepository paymentRepository,
@@ -24,10 +24,10 @@ public sealed class UnitOfWork(
     private readonly LitMarketDbContext _db = db;
 
     public IBookCartRepository BookCarts { get; } = bookCartRepository;
-    public IBookCategoryRepository BookCategories { get; } = bookCategoryRepository;
     public IBookImageRepository BookImages { get; } = bookImageRepository;
     public IBookRepository Books { get; } = bookRepository;
     public ICustomerRepository Customers { get; } = customerRepository;
+    public IGenreRepository Genres { get; } = genreRepository;
     public IOrderItemRepository OrderItems { get; } = orderItemRepository;
     public IOrderRepository Orders { get; } = orderRepository;
     public IPaymentRepository Payments { get; } = paymentRepository;

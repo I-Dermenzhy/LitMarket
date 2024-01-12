@@ -644,7 +644,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Domain.Models.Books.Book", b =>
                 {
-                    b.HasOne("Domain.Models.Books.BookCategory", "Category")
+                    b.HasOne("Domain.Models.Books.BookCategory", "BookCategory")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -656,7 +656,7 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("BookCategory");
 
                     b.Navigation("PriceList");
                 });

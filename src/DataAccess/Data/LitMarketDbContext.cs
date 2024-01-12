@@ -13,11 +13,9 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
     : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<Book> Books => Set<Book>();
-    public DbSet<BookCategory> BookCategories => Set<BookCategory>();
     public DbSet<BookImage> BookImages => Set<BookImage>();
-
     public DbSet<Customer> Customers => Set<Customer>();
-
+    public DbSet<Genre> Genres => Set<Genre>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Payment> Payments => Set<Payment>();
@@ -34,16 +32,16 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
 
     private static void SeedData(ModelBuilder modelBuilder)
     {
-        #region Categories
-        var action = new BookCategory { Id = 1, Name = "Action", DisplayOrder = 1 };
-        var adventure = new BookCategory { Id = 2, Name = "Adventure", DisplayOrder = 2 };
-        var dystopia = new BookCategory { Id = 4, Name = "Dystopian Fiction", DisplayOrder = 3 };
-        var drama = new BookCategory { Id = 5, Name = "Drama", DisplayOrder = 4 };
-        var fantasy = new BookCategory { Id = 7, Name = "Fantasy", DisplayOrder = 5 };
-        var history = new BookCategory { Id = 3, Name = "History", DisplayOrder = 6 };
-        var romance = new BookCategory { Id = 6, Name = "Romance", DisplayOrder = 7 };
+        #region BookCategories
+        var action = new Genre { Id = 1, Name = "Action", DisplayOrder = 1 };
+        var adventure = new Genre { Id = 2, Name = "Adventure", DisplayOrder = 2 };
+        var dystopia = new Genre { Id = 4, Name = "Dystopian Fiction", DisplayOrder = 3 };
+        var drama = new Genre { Id = 5, Name = "Drama", DisplayOrder = 4 };
+        var fantasy = new Genre { Id = 7, Name = "Fantasy", DisplayOrder = 5 };
+        var history = new Genre { Id = 3, Name = "History", DisplayOrder = 6 };
+        var romance = new Genre { Id = 6, Name = "Romance", DisplayOrder = 7 };
 
-        modelBuilder.Entity<BookCategory>().HasData(
+        modelBuilder.Entity<Genre>().HasData(
             action, adventure, history, dystopia, drama, romance, fantasy
         );
         #endregion
@@ -119,7 +117,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 1,
                 Title = "Fortune of Time",
                 Author = "Billy Spark",
-                CategoryId = history.Id,
+                GenreId = history.Id,
                 Description = description,
                 ISBN = "SWD9999001",
                 PriceListId = fortuneOfTimePriceList.Id
@@ -129,7 +127,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 2,
                 Title = "Dark Skies",
                 Author = "Nancy Hoover",
-                CategoryId = dystopia.Id,
+                GenreId = dystopia.Id,
                 Description = description,
                 ISBN = "CAW777777701",
                 PriceListId = darkSkiesPriceList.Id
@@ -139,7 +137,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 3,
                 Title = "Vanish in the Sunset",
                 Author = "Julian Button",
-                CategoryId = drama.Id,
+                GenreId = drama.Id,
                 Description = description,
                 ISBN = "RITO5555501",
                 PriceListId = vanishInTheSunsetPriceList.Id
@@ -149,7 +147,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 4,
                 Title = "Cotton Candy",
                 Author = "Abby Muscles",
-                CategoryId = romance.Id,
+                GenreId = romance.Id,
                 Description = description,
                 ISBN = "WS3333333301",
                 PriceListId = cottonCandyPriceList.Id
@@ -159,7 +157,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 5,
                 Title = "Rock in the Ocean",
                 Author = "Ron Parker",
-                CategoryId = adventure.Id,
+                GenreId = adventure.Id,
                 Description = description,
                 ISBN = "SOTJ1111111101",
                 PriceListId = rockInTheOceanPriceList.Id
@@ -169,7 +167,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
                 Id = 6,
                 Title = "Leaves and Wonders",
                 Author = "Laura Phantom",
-                CategoryId = action.Id,
+                GenreId = action.Id,
                 Description = description,
                 ISBN = "FOT000000001",
                 PriceListId = leavesAndWondersPriceList.Id

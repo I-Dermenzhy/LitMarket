@@ -8,10 +8,10 @@ namespace Abstractions.Repositories;
 public interface IUnitOfWork
 {
     public IBookCartRepository BookCarts { get; }
-    public IBookCategoryRepository BookCategories { get; }
     public IBookImageRepository BookImages { get; }
     public IBookRepository Books { get; }
     public ICustomerRepository Customers { get; }
+    public IGenreRepository Genres { get; }
     public IOrderItemRepository OrderItems { get; }
     public IOrderRepository Orders { get; }
     public IPaymentRepository Payments { get; }

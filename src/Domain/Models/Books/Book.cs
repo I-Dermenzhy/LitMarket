@@ -18,11 +18,11 @@ public class Book : IModel
     public string Author { get; set; }
 
     [Required]
-    public int CategoryId { get; set; }
+    public int GenreId { get; set; }
 
     [ValidateNever]
-    [ForeignKey(nameof(CategoryId))]
-    public virtual BookCategory Category { get; set; }
+    [ForeignKey(nameof(GenreId))]
+    public virtual Genre Genre { get; set; }
 
     [MaxLength(10000)]
     public string? Description { get; set; }

@@ -7,9 +7,9 @@ public class BookDto
 
     public string Author { get; set; }
 
-    public int CategoryId { get; set; }
+    public int GenreId { get; set; }
 
-    public BookCategoryDto Category { get; set; }
+    public GenreDto Genre { get; set; }
 
     public string? Description { get; set; }
 

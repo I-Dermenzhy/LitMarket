@@ -20,10 +20,10 @@ public sealed class MappingProfile : Profile
             .ForMember(bcd => bcd.PricePerBook, opt => opt.MapFrom(src => src.GetPricePerBook()))
             .ForMember(bcd => bcd.TotalPrice, opt => opt.MapFrom(src => src.GetTotalPrice()))
             .ReverseMap();
-        CreateMap<BookCategory, BookCategoryDto>().ReverseMap();
         CreateMap<BookImage, BookImageDto>().ReverseMap();
         CreateMap<Book, BookDto>().ReverseMap();
         CreateMap<Customer, CustomerDto>().ReverseMap();
+        CreateMap<Genre, GenreDto>().ReverseMap();
         CreateMap<Order, OrderDto>().ReverseMap();
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(oib => oib.TotalPrice, opt => opt.MapFrom(src => src.GetTotalPrice()))

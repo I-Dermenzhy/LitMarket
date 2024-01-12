@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Models.Books;
 
 #pragma warning disable CS8618 
-public class BookCategory : IModel
+public class Genre : IModel
 {
     [Key]
     public int Id { get; set; }
