@@ -7,8 +7,6 @@ namespace Domain.Models.Users;
 #pragma warning disable CS8618 
 public class Customer : IdentityUser, IModel<string>
 {
-    public FullAddress FullAddress { get; set; }
-
     [Required]
     [MaxLength(50)]
     public string Name { get; set; }
