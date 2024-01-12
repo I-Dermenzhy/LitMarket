@@ -7,7 +7,7 @@ using DataAccess.Data;
 namespace DataAccess.Repositories;
 
 public sealed class UnitOfWork(
-    LibMarketDbContext db,
+    LitMarketDbContext db,
     IBookCategoryRepository bookCategoryRepository,
     IBookImageRepository bookImageRepository,
     IBookRepository bookRepository,
@@ -18,7 +18,7 @@ public sealed class UnitOfWork(
     IPriceListRepository priceListRepository,
     IShippingRepository shippingRepository)
 {
-    private readonly LibMarketDbContext _db = db;
+    private readonly LitMarketDbContext _db = db;
 
     public IBookCategoryRepository BookCategoryRepository { get; } = bookCategoryRepository;
     public IBookImageRepository BookImageRepository { get; } = bookImageRepository;

@@ -1,6 +1,5 @@
 ﻿using Domain.Models.Books;
 using Domain.Models.Orders;
-using Domain.Models.Products;
 using Domain.Models.Users;
 
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Data;
 
-public class LibMarketDbContext(DbContextOptions<LibMarketDbContext> options)
+public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
     : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<Book> Books => Set<Book>();
@@ -25,7 +24,7 @@ public class LibMarketDbContext(DbContextOptions<LibMarketDbContext> options)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(LibMarketDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(LitMarketDbContext).Assembly);
 
         base.OnModelCreating(modelBuilder);
 

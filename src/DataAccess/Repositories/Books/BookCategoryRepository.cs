@@ -7,7 +7,7 @@ using Domain.Models.Books;
 
 namespace DataAccess.Repositories.Books;
 
-public class BookCategoryRepository(LibMarketDbContext db)
+public class BookCategoryRepository(LitMarketDbContext db)
     : ModelRepository<BookCategory>(db), IBookCategoryRepository
 {
     public BookCategory GetByName(string name)

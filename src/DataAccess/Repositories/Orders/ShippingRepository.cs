@@ -6,7 +6,7 @@ using Domain.Models.Orders;
 
 namespace DataAccess.Repositories.Orders;
 
-public class ShippingRepository(LibMarketDbContext db)
+public class ShippingRepository(LitMarketDbContext db)
     : ModelRepository<Shipping>(db), IShippingRepository
 {
     public void UpdateShippingDetails(int id, string carrier, string trackingNumber, DateOnly arrivalDate)

@@ -6,7 +6,7 @@ using Domain.Models.Orders;
 
 namespace DataAccess.Repositories.Orders;
 
-public class OrderItemRepository(LibMarketDbContext db)
+public class OrderItemRepository(LitMarketDbContext db)
         : ModelRepository<OrderItem>(db), IOrderItemRepository
 {
     public IEnumerable<OrderItem> GetByOrder(int orderId)

@@ -6,7 +6,7 @@ using Domain.Models.Products;
 
 namespace DataAccess.Repositories.Books;
 
-public class PriceListRepository(LibMarketDbContext db)
+public class PriceListRepository(LitMarketDbContext db)
     : ModelRepository<PriceList>(db), IPriceListRepository
 {
 }

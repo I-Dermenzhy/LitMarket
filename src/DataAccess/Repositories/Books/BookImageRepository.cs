@@ -7,7 +7,7 @@ using Domain.Models.Books;
 
 namespace DataAccess.Repositories.Books;
 
-public class BookImageRepository(LibMarketDbContext db)
+public class BookImageRepository(LitMarketDbContext db)
     : ModelRepository<BookImage>(db), IBookImageRepository
 {
     public IEnumerable<BookImage> GetByBook(int bookId)

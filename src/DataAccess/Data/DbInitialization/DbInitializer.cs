@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Data.DbInitialization;
 
 public class DbInitializer(
-    LibMarketDbContext db,
+    LitMarketDbContext db,
     UserManager<IdentityUser> userManager,
     RoleManager<IdentityRole> roleManager)
     : IDbInitializer
 {
-    private readonly LibMarketDbContext _db = db;
+    private readonly LitMarketDbContext _db = db;
     private readonly UserManager<IdentityUser> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 

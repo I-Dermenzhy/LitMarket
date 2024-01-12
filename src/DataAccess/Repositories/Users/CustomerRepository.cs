@@ -6,7 +6,7 @@ using Domain.Models.Users;
 
 namespace DataAccess.Repositories.Users;
 
-public class CustomerRepository(LibMarketDbContext db)
+public class CustomerRepository(LitMarketDbContext db)
     : ModelRepository<Customer, string>(db), ICustomerRepository
 {
 }

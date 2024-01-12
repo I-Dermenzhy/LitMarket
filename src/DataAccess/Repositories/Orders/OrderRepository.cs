@@ -6,7 +6,7 @@ using Domain.Models.Orders;
 
 namespace DataAccess.Repositories.Orders;
 
-public class OrderRepository(LibMarketDbContext db)
+public class OrderRepository(LitMarketDbContext db)
     : ModelRepository<Order>(db), IOrderRepository
 {
     public IEnumerable<Order> GetByOrderStatus(OrderStatus status, string? customerId = null)

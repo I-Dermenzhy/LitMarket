@@ -5,7 +5,7 @@ using DataAccess.Data;
 using Domain.Models.Orders;
 
 namespace DataAccess.Repositories.Orders;
-public class PaymentRepository(LibMarketDbContext db)
+public class PaymentRepository(LitMarketDbContext db)
     : ModelRepository<Payment>(db), IPaymentRepository
 {
     public void UpdateStatus(int id, PaymentStatus paymentStatus)
