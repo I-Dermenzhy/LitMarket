@@ -1,24 +1,117 @@
+using DataAccess.Data;
+using DataAccess.Data.DbInitialization;
+using DataAccess.Extensions;
+
+using Domain.Dto;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+using MVC.Services;
+
+using Stripe;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+var configuration = builder.Configuration;
+
+ConfigureServices();
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
+    ConfigureForNotDevelopment();
+
+Configure();
+
+SeedData();
+
+app.Run();
+
+void Configure()
+{
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseSession();
+
+    app.MapRazorPages();
+
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
+    StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
+}
+
+void ConfigureForNotDevelopment()
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+void ConfigureServices()
+{
+    IServiceCollection services = builder.Services;
 
-app.UseRouting();
+    services.AddRazorPages();
+    services.AddControllersWithViews();
 
-app.UseAuthorization();
+    services.AddDbContext<LitMarketDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("Default"))
+            .UseLazyLoadingProxies());
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<LitMarketDbContext>()
+        .AddDefaultTokenProviders();
 
-app.Run();
+    services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+    services.AddAuthentication()
+        .AddFacebook(options =>
+        {
+            options.AppId = configuration["Authentication:Facebook:AppId"]!;
+            options.AppSecret = configuration["Authentication:Facebook:AppSecret"]!;
+        })
+        .AddMicrosoftAccount(options =>
+        {
+            options.ClientId = configuration["Authentication:Microsoft:ClientId"]!;
+            options.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"]!;
+        });
+
+    services.AddDistributedMemoryCache();
+
+    services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(30);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    });
+
+    services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = $"/Identity/Account/Login";
+        options.LogoutPath = $"/Identity/Account/Logout";
+        options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+    });
+
+    //services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
+    services.AddScoped<IFileHelper, FileHelper>();
+    //services.AddScoped<IPaymentSessionService, PaymentSessionService>();
+    services.AddScoped<IDbInitializer, DbInitializer>();
+
+    services.AddLitMarketRepositories();
+}
+
+void SeedData()
+{
+    using var scope = app!.Services.CreateScope();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    dbInitializer.Initialize();
+}
