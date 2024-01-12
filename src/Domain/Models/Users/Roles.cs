@@ -1,4 +1,4 @@
-﻿namespace Domain.Models;
+﻿namespace Domain.Models.Users;
 
 public static class Roles
 {
