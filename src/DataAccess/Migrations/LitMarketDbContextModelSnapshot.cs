@@ -18,9 +18,6 @@ namespace DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.1")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -570,10 +567,12 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -610,10 +609,12 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -799,43 +800,6 @@ namespace DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Models.Users.Customer", b =>
-                {
-                    b.OwnsOne("Domain.Models.Users.FullAddress", "FullAddress", b1 =>
-                        {
-                            b1.Property<string>("CustomerId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("City")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)");
-
-                            b1.Property<string>("Country")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)");
-
-                            b1.Property<string>("PostalCode")
-                                .HasMaxLength(6)
-                                .HasColumnType("nvarchar(6)")
-                                .HasAnnotation("ErrorMessage", "Postal code must be exactly 6 digits.")
-                                .HasAnnotation("RegularExpression", "^\\d{6}$");
-
-                            b1.Property<string>("StreetAddress")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)");
-
-                            b1.HasKey("CustomerId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CustomerId");
-                        });
-
-                    b.Navigation("FullAddress")
                         .IsRequired();
                 });
 
