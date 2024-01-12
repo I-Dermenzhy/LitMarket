@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models.Orders;
 
@@ -13,13 +10,6 @@ public class Payment : IModel
 
     public DateTime ApprovementDate { get; set; }
     public DateOnly DueDate { get; set; }
-
-    [Required]
-    public int OrderId { get; set; }
-
-    [ForeignKey(nameof(OrderId))]
-    [ValidateNever]
-    public virtual Order Order { get; set; }
 
     [MaxLength(100)]
     public string? PaymentIntentId { get; set; }

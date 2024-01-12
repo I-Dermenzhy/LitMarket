@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Book>
+
+<div class="row pb-3">
+    @foreach (var book in Model)
+    {
+        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-6">
+            <div class="row p-2">
+                <div class="col-12 p-1">
+                    <div class="card border-0 p-3 shadow border-top border-5 rounded d-flex flex-column mx-auto">
+                        @if (book.Images.Any())
+                        {
+                            <img src="@book.Images.First().Url" class="card-image-top rounded" />
+                        }
+                        else
+                        {
+                            <img src="https://placehold.co/500x600/png" class="card-image-top rounded" />
+                        }
+                        <div class="card-body pb-0">
+                            <div class="pl-1">
+                                <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">
+                                    @book.Title
+                                </p>
+                                <p class="card-title text-warning text-center">
+                                    by <b>@book.Author</b>
+                                </p>
+                            </div>
+                            <div class="pl-0">
+                                <p class="text-dark text-dark opacity-75 text-center mb-0">
+                                    List price: <span class="text-decoration-line-through">@book.PriceList.ListPrice.ToString("c")</span>
+                                </p>
+                            </div>
+                            <div class="pl-1">
+                                <p class="text-dark text-dark opacity-75 text-center">
+                                    As low as: <span>@book.PriceList.Price100.ToString("c")</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary bg-gradient border-0 form-control">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<partial name="_ExtraSpace" />
+
+@section Scripts {
+    <script src="~/js/card.js"></script>
+}

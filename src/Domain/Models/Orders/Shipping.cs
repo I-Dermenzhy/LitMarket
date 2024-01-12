@@ -1,9 +1,6 @@
 ﻿using Domain.Models.Users;
 
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Orders;
 
@@ -17,13 +14,6 @@ public class Shipping : IModel
 
     [MaxLength(40)]
     public string? Carrier { get; set; }
-
-    [Required]
-    public int OrderId { get; set; }
-
-    [ForeignKey(nameof(OrderId))]
-    [ValidateNever]
-    public virtual Order Order { get; set; }
 
     [MaxLength(20)]
     public string? TrackingNumber { get; set; }
