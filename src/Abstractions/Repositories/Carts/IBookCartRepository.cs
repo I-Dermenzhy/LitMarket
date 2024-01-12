@@ -4,6 +4,6 @@ namespace Abstractions.Repositories.Carts;
 
 public interface IBookCartRepository : IModelRepository<BookCart>
 {
-    public BookCart GetByCustomer(string customerId);
+    public IEnumerable<BookCart> GetByCustomer(string customerId);
     public BookCart GetByCustomerAndBook(string customerId, int bookId);
 }

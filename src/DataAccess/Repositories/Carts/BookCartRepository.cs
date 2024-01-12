@@ -9,9 +9,9 @@ namespace DataAccess.Repositories.Carts;
 public class BookCartRepository(LitMarketDbContext db)
     : ModelRepository<BookCart>(db), IBookCartRepository
 {
-    public BookCart GetByCustomer(string customerId)
+    public IEnumerable<BookCart> GetByCustomer(string customerId)
     {
-        return GetByFilter(bc => bc.CustomerId == customerId).FirstOrDefault()
+        return GetByFilter(bc => bc.CustomerId == customerId)
             ?? throw new ModelNotFoundException<BookCart>(bc => bc.CustomerId == customerId);
     }
 
