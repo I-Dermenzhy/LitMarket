@@ -15,6 +15,7 @@ public interface IUnitOfWork
     public IOrderItemRepository OrderItems { get; }
     public IOrderRepository Orders { get; }
     public IPaymentRepository Payments { get; }
+    public IPriceListRepository PriceLists { get; }
     public IShippingRepository Shippings { get; }
 
     public void Save();
