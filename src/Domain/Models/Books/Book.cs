@@ -27,6 +27,7 @@ public class Book : IModel
     [MaxLength(10000)]
     public string? Description { get; set; }
 
+    [ValidateNever]
     public virtual IList<BookImage> Images { get; set; }
 
     [Required]
