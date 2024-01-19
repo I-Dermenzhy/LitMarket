@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Models.Carts;
 
 #pragma warning disable CS8618
-public class BookCart : IBookCart
+public class BookCart : IModel
 {
     [Key]
     public int Id { get; set; }
