@@ -37,6 +37,9 @@ public class Order : IModel
     public virtual Payment Payment { get; set; }
 
     [Required]
+    public DateTime OrderDate { get; set; }
+
+    [Required]
     [Range(0, 100000)]
     public double TotalPrice { get; set; }
 
