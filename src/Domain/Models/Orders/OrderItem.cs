@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Books;
+using Domain.Models.Carts;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
@@ -8,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Models.Orders;
 
 #pragma warning disable CS8618 
-public class OrderItem : IModel
+public class OrderItem : IBookCart
 {
     [Key]
     public int Id { get; set; }
