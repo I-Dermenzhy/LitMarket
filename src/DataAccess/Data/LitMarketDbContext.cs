@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Books;
+using Domain.Models.Carts;
 using Domain.Models.Orders;
 using Domain.Models.Products;
 using Domain.Models.Users;
@@ -14,6 +15,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
 {
     public DbSet<Book> Books => Set<Book>();
     public DbSet<BookImage> BookImages => Set<BookImage>();
+    public DbSet<BookCart> BookCarts => Set<BookCart>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Genre> Genres => Set<Genre>();
     public DbSet<Order> Orders => Set<Order>();
