@@ -25,6 +25,7 @@ public sealed class MappingProfile : Profile
         CreateMap<Customer, CustomerDto>().ReverseMap();
         CreateMap<Genre, GenreDto>().ReverseMap();
         CreateMap<Order, OrderDto>().ReverseMap();
+        CreateMap<OrderUpdateRequest, OrderUpdateRequestDto>().ReverseMap();
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(oib => oib.TotalPrice, opt => opt.MapFrom(src => src.GetTotalPrice()))
             .ReverseMap();
