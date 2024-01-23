@@ -12,10 +12,10 @@ public class Shipping : IModel
 
     public DateOnly ArrivalDate { get; set; }
 
-    [MaxLength(40)]
+    [Length(3, 40)]
     public string? Carrier { get; set; }
 
-    [MaxLength(20)]
+    [Length(10, 30)]
     public string? TrackingNumber { get; set; }
 
     [Required]
