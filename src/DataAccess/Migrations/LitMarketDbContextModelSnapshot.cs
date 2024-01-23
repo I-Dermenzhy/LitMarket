@@ -64,7 +64,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PriceListId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
 
                     b.HasData(
                         new
@@ -151,7 +151,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookImages");
+                    b.ToTable("BookImages", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Books.Genre", b =>
@@ -172,7 +172,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
 
                     b.HasData(
                         new
@@ -243,7 +243,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("BookCarts");
+                    b.ToTable("BookCarts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Order", b =>
@@ -281,7 +281,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ShippingId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.OrderItem", b =>
@@ -310,7 +310,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Payment", b =>
@@ -341,7 +341,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Shipping", b =>
@@ -368,7 +368,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shippings");
+                    b.ToTable("Shippings", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Products.PriceList", b =>
@@ -393,7 +393,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PriceList");
+                    b.ToTable("PriceList", (string)null);
 
                     b.HasData(
                         new
@@ -765,7 +765,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Domain.Models.Orders.Shipping", b =>
                 {
-                    b.OwnsOne("Domain.Models.Users.FullAddress", "ShippingAddress", b1 =>
+                    b.OwnsOne("Domain.Models.Orders.Shipping.ShippingAddress#Domain.Models.Users.FullAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("ShippingId")
                                 .HasColumnType("int");
@@ -790,7 +790,7 @@ namespace DataAccess.Migrations
 
                             b1.HasKey("ShippingId");
 
-                            b1.ToTable("Shippings");
+                            b1.ToTable("Shippings", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ShippingId");

@@ -17,6 +17,7 @@ public sealed class UnitOfWork(
     IGenreRepository genreRepository,
     IOrderItemRepository orderItemRepository,
     IOrderRepository orderRepository,
+    IOrderUpdateRequestRepository orderUpdateRequestRepository,
     IPaymentRepository paymentRepository,
     IPriceListRepository priceListRepository,
     IShippingRepository shippingRepository) : IUnitOfWork
@@ -30,6 +31,7 @@ public sealed class UnitOfWork(
     public IGenreRepository Genres { get; } = genreRepository;
     public IOrderItemRepository OrderItems { get; } = orderItemRepository;
     public IOrderRepository Orders { get; } = orderRepository;
+    public IOrderUpdateRequestRepository OrderUpdateRequests { get; } = orderUpdateRequestRepository;
     public IPaymentRepository Payments { get; } = paymentRepository;
     public IPriceListRepository PriceLists { get; } = priceListRepository;
     public IShippingRepository Shippings { get; } = shippingRepository;

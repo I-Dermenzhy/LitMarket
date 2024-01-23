@@ -1,19 +1,18 @@
 ﻿using Domain.Dto.Users;
-using Domain.Models.Orders;
 
 namespace Domain.Dto.Orders;
 
-#pragma warning disable CS8618 
+#pragma warning disable CS8618
 public class OrderDto
 {
-    public int Id { get; set; }
-    public string CustomerId { get; set; }
-    public CustomerDto Customer { get; set; }
-    public string ShippingId { get; set; }
-    public ShippingDto Shipping { get; set; }
-    public IEnumerable<OrderItemDto> Items { get; set; }
-    public string PaymentId { get; set; }
-    public PaymentDto Payment { get; set; }
-    public double TotalPrice { get; set; }
-    public OrderStatus Status { get; set; }
+	public int Id { get; set; }
+	public string CustomerId { get; set; }
+	public CustomerDto Customer { get; set; }
+	public string ShippingId { get; set; }
+	public ShippingDto Shipping { get; set; }
+	public IEnumerable<OrderItemDto> Items { get; set; }
+	public string PaymentId { get; set; }
+	public PaymentDto Payment { get; set; }
+	public double TotalPrice { get; set; }
+	public string Status { get; set; }
 }

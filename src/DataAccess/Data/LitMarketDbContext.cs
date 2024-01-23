@@ -19,6 +19,7 @@ public class LitMarketDbContext(DbContextOptions<LitMarketDbContext> options)
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Genre> Genres => Set<Genre>();
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderUpdateRequest> OrderUpdateRequests => Set<OrderUpdateRequest>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Shipping> Shippings => Set<Shipping>();

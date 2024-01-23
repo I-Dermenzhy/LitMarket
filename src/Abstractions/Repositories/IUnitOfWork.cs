@@ -14,6 +14,7 @@ public interface IUnitOfWork
     public IGenreRepository Genres { get; }
     public IOrderItemRepository OrderItems { get; }
     public IOrderRepository Orders { get; }
+    public IOrderUpdateRequestRepository OrderUpdateRequests { get; }
     public IPaymentRepository Payments { get; }
     public IPriceListRepository PriceLists { get; }
     public IShippingRepository Shippings { get; }
