@@ -25,6 +25,7 @@ public static class IServiceCollectionExtensions
         services.AddScoped<IGenreRepository, BookCategoryRepository>();
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IOrderUpdateRequestRepository, OrderUpdateRequestRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IPriceListRepository, PriceListRepository>();
         services.AddScoped<IShippingRepository, ShippingRepository>();
