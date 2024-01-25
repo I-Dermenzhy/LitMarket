@@ -10,9 +10,9 @@ namespace DataAccess.Repositories.Orders;
 public class OrderUpdateRequestRepository(LitMarketDbContext db)
         : ModelRepository<OrderUpdateRequest>(db), IOrderUpdateRequestRepository
 {
-    public OrderUpdateRequest GetByCurrentOrder(int currentOrderId)
+    public OrderUpdateRequest GetByOrder(int orderId)
     {
-        return GetByFilter(our => our.CurrentOrderId == currentOrderId).FirstOrDefault()
-            ?? throw new ModelNotFoundException<OrderUpdateRequest>(our => our.CurrentOrderId == currentOrderId);
+        return GetByFilter(our => our.OrderId == orderId).FirstOrDefault()
+            ?? throw new ModelNotFoundException<OrderUpdateRequest>(our => our.OrderId == orderId);
     }
 }

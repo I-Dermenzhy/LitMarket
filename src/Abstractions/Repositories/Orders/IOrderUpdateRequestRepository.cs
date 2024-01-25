@@ -4,5 +4,5 @@ namespace Abstractions.Repositories.Orders;
 
 public interface IOrderUpdateRequestRepository : IModelRepository<OrderUpdateRequest>
 {
-    public OrderUpdateRequest GetByCurrentOrder(int currentOrderId);
+    public OrderUpdateRequest GetByOrder(int orderId);
 }
