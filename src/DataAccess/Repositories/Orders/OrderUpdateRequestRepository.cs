@@ -15,4 +15,6 @@ public class OrderUpdateRequestRepository(LitMarketDbContext db)
         return GetByFilter(our => our.OrderId == orderId).FirstOrDefault()
             ?? throw new ModelNotFoundException<OrderUpdateRequest>(our => our.OrderId == orderId);
     }
+
+    public bool Exists(int orderId) => GetByFilter(our => our.OrderId == orderId).Any();
 }
