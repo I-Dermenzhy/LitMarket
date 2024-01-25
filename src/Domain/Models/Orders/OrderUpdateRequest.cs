@@ -15,7 +15,7 @@ public class OrderUpdateRequest : IModel
 
     [ForeignKey(nameof(OrderId))]
     [ValidateNever]
-    public Order Order { get; set; }
+    public virtual Order Order { get; set; }
 
     public string? CustomerNameUpdate { get; set; }
     public FullAddress? ShippingAddressUpdate { get; set; }
