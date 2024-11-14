@@ -3,11 +3,13 @@
 using DataAccess.Exceptions;
 
 using Domain.Models.Carts;
+using Domain.Models.Users;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using MVC.Extensions;
+using MVC.ViewComponents;
 using MVC.ViewModels;
 
 using System.Diagnostics;
@@ -15,7 +17,7 @@ using System.Diagnostics;
 namespace MVC.Areas.Customer.Controllers;
 
 [Area("Customer")]
-internal sealed class HomeController(IUnitOfWork unitOfWork) : Controller
+public sealed class HomeController(IUnitOfWork unitOfWork) : Controller
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -39,7 +41,7 @@ internal sealed class HomeController(IUnitOfWork unitOfWork) : Controller
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = $"{Roles.Customer},{Roles.Company}")]
     public IActionResult Details(BookCart bookCart)
     {
         bookCart.CustomerId = this.GetUserId();
@@ -78,6 +80,6 @@ internal sealed class HomeController(IUnitOfWork unitOfWork) : Controller
     private void UpdateCartCount(string userId)
     {
         int bookCartsCount = _unitOfWork.BookCarts.GetByCustomer(userId).Count();
-        HttpContext.Session.SetInt32("BookCartsCount", bookCartsCount);
+        HttpContext.Session.SetInt32(SessionValues.BookCartsCount, bookCartsCount);
     }
 }

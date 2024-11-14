@@ -1,0 +1,526 @@
+﻿@model Order
+
+<form method="post">
+    <br />
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2 class="text-white py-2">Order Details</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <input asp-for="Id" hidden />
+                            <input asp-for="CustomerId" hidden />
+                            <input asp-for="TotalPrice" hidden />
+                            <input asp-for="Status" hidden />
+                            <input asp-for="Payment.Status" hidden />
+                            <input asp-for="PaymentId" hidden />
+                            <input asp-for="ShippingId" hidden />
+
+                            <ul class="list-group mt-1 mb-3">
+                                <li class="list-group-item bg-warning cent p-1">
+                                    <div class="row container">
+                                        <div class="col-12">
+                                            <h5 class="text-light text-center m-0">General</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-secondary d-flex justify-content-center py-1 px-0">
+                                    <div class="row container p-1">
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Order Date</div>
+                                            <div class="col-9">
+                                                @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="OrderDate" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="OrderDate" disabled type="text" class="form-control" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group my-3">
+                                <li class="list-group-item bg-warning p-1">
+                                    <div class="row container">
+                                        <div class="col-12">
+                                            <h5 class="text-light text-center m-0">Receiver</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-secondary d-flex justify-content-center py-1 px-0">
+                                    <div class="row container p-1">
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Name</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Customer.Name" type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Name" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Customer.Name" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Name" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Customer.Name" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Name" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1 mx-0">
+                                            <div class="col-3 mt-1">Email</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Customer.Email" type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Customer.Email" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Customer.Email" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group my-3">
+                                <li class="list-group-item bg-warning p-1">
+                                    <div class="row container">
+                                        <div class="col-12">
+                                            <h5 class="text-light text-center m-0">Payment</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-secondary d-flex justify-content-center py-1 px-0">
+                                    <div class="row container p-1">
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Payment Status</div>
+                                            <div class="col-9">
+                                                @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Payment.Status" type="text" disabled class="form-control" />
+                                                    <span asp-validation-for="Payment.Status" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Payment.Status" disabled type="text" disabled class="form-control" />
+                                                }
+
+                                            </div>
+                                        </div>
+                                        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                        {
+                                            <div class="row my-1 mx-0">
+                                                <div class="col-3 mt-1">Session ID</div>
+                                                <div class="col-9">
+                                                    <input asp-for="Payment.SessionId" type="text" disabled class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="row my-1 mx-0">
+                                                <div class="col-3 mt-1">Payment ID</div>
+                                                <div class="col-9">
+                                                    <input asp-for="Payment.PaymentIntentId" type="text" disabled class="form-control" />
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (Model.Payment.ApprovementDate == default)
+                                        {
+                                            <div class="row my-1 mx-0">
+                                                <div class="col-3 mt-1">Payment Due Date</div>
+                                                <div class="col-9">
+                                                    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                    {
+                                                        <input asp-for="Payment.DueDate" type=" text" class="form-control" />
+                                                        <span asp-validation-for="Payment.DueDate" class="text-danger"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="Payment.DueDate" disabled type=" text" class="form-control" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row my-1 mx-0">
+                                                <div class="col-3 mt-1">Payment Date</div>
+                                                <div class="col-9">
+                                                    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                    {
+                                                        <input asp-for="Payment.ApprovementDate" disabled type="text" class="form-control" />
+                                                        <span asp-validation-for="Payment.ApprovementDate" class="text-danger"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="Payment.ApprovementDate" disabled type="text" class="form-control" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group my-3">
+                                <li class="list-group-item bg-warning p-1">
+                                    <div class="row container">
+                                        <div class="col-12">
+                                            <h5 class="text-light text-center m-0">Shipping Address</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item border-secondary d-flex justify-content-center py-1 px-0">
+                                    <div class="row container p-1">
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Country</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.Country" type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.Country" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.Country" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.Country" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.Country" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.Country" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">City</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.City" type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.City" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.City" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.City" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.City" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.City" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Street Address</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.StreetAddress" type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.StreetAddress" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.StreetAddress" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.StreetAddress" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.StreetAddress" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.StreetAddress" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="row my-1 mx-0">
+                                            <div class="col-3 mt-1">Postal Code</div>
+                                            <div class="col-9">
+                                                @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                Model.Status == OrderStatus.Processing)
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.PostalCode" type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.PostalCode" class="text-danger"></span>
+                                                }
+                                                else if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.PostalCode" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.PostalCode" class="text-danger"></span>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="Shipping.ShippingAddress.PostalCode" disabled type="text" class="form-control" />
+                                                    <span asp-validation-for="Shipping.ShippingAddress.PostalCode" class="text-danger"></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee)
+                            || !string.IsNullOrEmpty(Model.Shipping.Carrier) || !string.IsNullOrEmpty(Model.Shipping.TrackingNumber))
+                            {
+                                <ul class="list-group my-3">
+                                    <li class="list-group-item bg-warning p-1">
+                                        <div class="row container">
+                                            <div class="col-12">
+                                                <h5 class="text-light text-center m-0">Delivery</h5>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-secondary d-flex justify-content-center py-1 px-0">
+                                        <div class="row container p-1">
+                                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                            {
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Carrier</div>
+                                                    <div class="col-9">
+                                                        @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                       Model.Status == OrderStatus.Processing)
+                                                        {
+                                                            <input asp-for="Shipping.Carrier" type="text" class="form-control" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input asp-for="Shipping.Carrier" disabled type="text" class="form-control" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.Shipping.Carrier))
+                                            {
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Carrier</div>
+                                                    <div class="col-9">
+                                                        <input asp-for="Shipping.Carrier" disabled type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                            {
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Tracking ID</div>
+                                                    <div class="col-9">
+                                                        @if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                                                       Model.Status == OrderStatus.Processing)
+                                                        {
+                                                            <input asp-for="Shipping.TrackingNumber" type="text" class="form-control" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input asp-for="Shipping.TrackingNumber" disabled type="text" class="form-control" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.Shipping.TrackingNumber))
+                                            {
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Tracking ID</div>
+                                                    <div class="col-9">
+                                                        <input asp-for="Shipping.TrackingNumber" disabled type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                                            {
+                                                @if (Model.Status != OrderStatus.Shipped 
+                                                && Model.Status != OrderStatus.Delivered)
+                                                {
+                                                    <div class="row my-1 mx-0">
+                                                        <div class="col-3 mt-1">Shipped Date</div>
+                                                        <div class="col-9">
+                                                            <input asp-for="Shipping.ShippingDate" type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="row my-1 mx-0">
+                                                        <div class="col-3 mt-1">Shipped Date</div>
+                                                        <div class="col-9">
+                                                            <input asp-for="Shipping.ShippingDate" disabled type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    @if (Model.Status == OrderStatus.Shipped)
+                                                    {
+                                                        <div class="row my-1 mx-0">
+                                                            <div class="col-3 mt-1">Arrival Date</div>
+                                                            <div class="col-9">
+                                                                <input asp-for="Shipping.ArrivalDate" type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row my-1 mx-0">
+                                                            <div class="col-3 mt-1">Arrival Date</div>
+                                                            <div class="col-9">
+                                                                <input asp-for="Shipping.ArrivalDate" disabled type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                            else if (Model.Status == OrderStatus.Shipped || Model.Status == OrderStatus.Delivered)
+                                            {
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Shipped Date</div>
+                                                    <div class="col-9">
+                                                        <input asp-for="Shipping.ShippingDate" disabled type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="row my-1 mx-0">
+                                                    <div class="col-3 mt-1">Arrival Date</div>
+                                                    <div class="col-9">
+                                                        <input asp-for="Shipping.ArrivalDate" disabled type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </li>
+                                </ul>
+                            }
+                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                            {
+                                <input type="submit" asp-action="UpdateOrder" asp-route-parameter="@Model" class="btn btn-warning form-control my-2" value="Update Order Details" />
+                            }
+                            else if (Model.Status == OrderStatus.Approved || Model.Status == OrderStatus.Pending ||
+                            Model.Status == OrderStatus.Processing)
+                            {
+                                <input type="submit" asp-action="RequestUpdateOrder" asp-route-parameter="@Model" class="btn btn-warning form-control my-2" value="Request Admin To Update Details" />
+                            }
+                            <a asp-controller="Order" asp-action="Index" class="btn btn-secondary form-control">Back to Orders</a>
+                        </div>
+                        <div class="col-12 col-lg-5 offset-lg-1 mt-lg-0 mt-sm-3">
+                            <label class="btn btn-outline-primary form-control mt-1 mb-2">Order Status - <b>@Model.Status</b></label>
+                            <ul class="list-group mb-3">
+                                @foreach (var item in Model.Items)
+                                {
+                                    <li class="list-group-item border-1 border-secondary d-flex justify-content-between p-2">
+                                        <div class="row container">
+                                            <div class="col-8">
+                                                <h6 class="my-0 text-primary mb-1">@item.Book.Title</h6>
+                                                <small class="text-muted">Price: @item.Price.ToString("c")</small><br />
+                                                <small class="text-muted">Quantity: @item.Count</small>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <p class="text-success">@item.GetTotalPrice().ToString("c")</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                <li class="list-group-item bg-primary">
+                                    <div class="row container">
+                                        <div class="col-6">
+                                            <h5 class="text-white">Total</h5>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <h5 class="text-white">@Model.TotalPrice.ToString("c")</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            @if (Model.Payment.Status is PaymentStatus.Delayed
+                                && User.IsInRole(Roles.Company))
+                            {
+                                <input type="submit" asp-action="Pay" asp-route-orderId="@Model.Id" class="btn btn-success form-control my-1" value="Pay Now" />
+                            }
+                            @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee))
+                            {
+                                if (Model.Status == OrderStatus.Approved)
+                                {
+                                    <button type="submit" asp-action="StartProcessing" asp-route-orderId="@Model.Id" class="btn btn-primary form-control my-1">Start Processing</button>
+                                }
+                                if (Model.Status == OrderStatus.Processing)
+                                {
+                                    <button type="submit" onclick="return validateInput()" asp-action="ShipOrder" asp-route-orderId="@Model" class="btn btn-primary form-control my-1">Ship Order</button>
+                                }
+                            }
+                            @if (Model.Payment.Status != PaymentStatus.Refunded
+                            && Model.Status != OrderStatus.Cancelled
+                            && Model.Status != OrderStatus.Shipped
+                            && Model.Status != OrderStatus.Delivered)
+                            {
+                                <button type="submit" asp-action="CancelOrder" asp-route-orderId="@Model.Id" class="btn btn-danger form-control my-1">Cancel Order</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<partial name="_ExtraSpace" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function validateInput() {
+            var trackingNumber = document.getElementById("Shipping_TrackingNumber").value;
+            var carrier = document.getElementById("Shipping_Carrier").value;
+
+            if (trackingNumber == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter a tracking number',
+                });
+                return false;
+            }
+
+            if (carrier == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter a carrier',
+                });
+                return false;
+            }
+
+            if (carrier.length < 3 || carrier.length > 40) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Carrier must be between 3 and 40 characters long',
+                });
+                return false;
+            }
+
+            if (trackingNumber.length < 10 || trackingNumber.length > 30) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Tracking number must be between 10 and 30 characters long',
+                });
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+}

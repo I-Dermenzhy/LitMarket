@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 using MVC.Services;
 
+using Services.Extensions;
+
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,10 +102,9 @@ void ConfigureServices()
         options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
     });
 
-    //services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+    services.AddStripeServices();
 
     services.AddScoped<IFileHelper, FileHelper>();
-    //services.AddScoped<IPaymentSessionService, PaymentSessionService>();
     services.AddScoped<IDbInitializer, DbInitializer>();
 
     services.AddLitMarketRepositories();

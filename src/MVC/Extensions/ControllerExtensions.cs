@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Models.Users;
+
+using Microsoft.AspNetCore.Mvc;
 
 using System.Security.Claims;
 
@@ -19,5 +21,13 @@ public static class ControllerExtensions
         var claimsIdentity = (ClaimsIdentity)controller.User.Identity!;
 
         return claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+    }
+
+    public static bool IsCompany(this Controller controller)
+    {
+        if (!controller.User.Identity!.IsAuthenticated)
+            return false;
+
+        return controller.User.IsInRole(Roles.Company);
     }
 }

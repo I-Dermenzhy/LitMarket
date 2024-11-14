@@ -64,7 +64,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PriceListId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
@@ -151,7 +151,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookImages", (string)null);
+                    b.ToTable("BookImages");
                 });
 
             modelBuilder.Entity("Domain.Models.Books.Genre", b =>
@@ -172,7 +172,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
 
                     b.HasData(
                         new
@@ -243,7 +243,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("BookCarts", (string)null);
+                    b.ToTable("BookCarts");
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Order", b =>
@@ -281,7 +281,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ShippingId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.OrderItem", b =>
@@ -310,7 +310,34 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("Domain.Models.Orders.OrderUpdateRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomerNameUpdate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderUpdateRequests");
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Payment", b =>
@@ -341,7 +368,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Domain.Models.Orders.Shipping", b =>
@@ -356,19 +383,17 @@ namespace DataAccess.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Carrier")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TrackingNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shippings", (string)null);
+                    b.ToTable("Shippings");
                 });
 
             modelBuilder.Entity("Domain.Models.Products.PriceList", b =>
@@ -393,7 +418,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PriceList", (string)null);
+                    b.ToTable("PriceList");
 
                     b.HasData(
                         new
@@ -763,9 +788,53 @@ namespace DataAccess.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("Domain.Models.Orders.OrderUpdateRequest", b =>
+                {
+                    b.HasOne("Domain.Models.Orders.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.Models.Users.FullAddress", "ShippingAddressUpdate", b1 =>
+                        {
+                            b1.Property<int>("OrderUpdateRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)");
+
+                            b1.Property<string>("Country")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)");
+
+                            b1.Property<string>("PostalCode")
+                                .HasMaxLength(6)
+                                .HasColumnType("nvarchar(6)")
+                                .HasAnnotation("ErrorMessage", "Postal code must be exactly 6 digits.")
+                                .HasAnnotation("RegularExpression", "^\\d{6}$");
+
+                            b1.Property<string>("StreetAddress")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)");
+
+                            b1.HasKey("OrderUpdateRequestId");
+
+                            b1.ToTable("OrderUpdateRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderUpdateRequestId");
+                        });
+
+                    b.Navigation("Order");
+
+                    b.Navigation("ShippingAddressUpdate");
+                });
+
             modelBuilder.Entity("Domain.Models.Orders.Shipping", b =>
                 {
-                    b.OwnsOne("Domain.Models.Orders.Shipping.ShippingAddress#Domain.Models.Users.FullAddress", "ShippingAddress", b1 =>
+                    b.OwnsOne("Domain.Models.Users.FullAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("ShippingId")
                                 .HasColumnType("int");
@@ -790,7 +859,7 @@ namespace DataAccess.Migrations
 
                             b1.HasKey("ShippingId");
 
-                            b1.ToTable("Shippings", (string)null);
+                            b1.ToTable("Shippings");
 
                             b1.WithOwner()
                                 .HasForeignKey("ShippingId");

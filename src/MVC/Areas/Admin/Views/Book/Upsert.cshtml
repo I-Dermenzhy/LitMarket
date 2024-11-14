@@ -1,0 +1,154 @@
+﻿@model BookVM
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@(Model.Book.Id! == 0 ? "Create": "Update") Book</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <form method="post" class="row col-9" enctype="multipart/form-data">    
+                <input asp-for="Book.Id" hidden />
+                <div class="border p-3">
+                    <div class="row p-1">
+                        <label asp-for="Book.Title" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.Title" class="form-control border" />
+                        <span asp-validation-for="Book.Title" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.Description" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <textarea asp-for="Book.Description" class="form-control border"></textarea>
+                        <span asp-validation-for="Book.Description" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.Author" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.Author" class="form-control border" />
+                        <span asp-validation-for="Book.Author" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.Genre" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <select asp-for="Book.GenreId" asp-items="Model.Genres" class="form-select p-1 ps-2">
+                            <option disabled>--Select Category--</option>
+                        </select>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.ISBN" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.ISBN" class="form-control border" />
+                        <span asp-validation-for="Book.ISBN" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.PriceList.ListPrice" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.PriceList.ListPrice" class="form-control border" />
+                        <span asp-validation-for="Book.PriceList.ListPrice" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.PriceList.Price" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.PriceList.Price" class="form-control border" />
+                        <span asp-validation-for="Book.PriceList.Price" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.PriceList.Price50" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.PriceList.Price50" class="form-control border" />
+                        <span asp-validation-for="Book.PriceList.Price50" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="row p-1">
+                        <label asp-for="Book.PriceList.Price100" class="p-1 ps-2 text-muted" style="font-weight:bold"></label>
+                        <input asp-for="Book.PriceList.Price100" class="form-control border" />
+                        <span asp-validation-for="Book.PriceList.Price100" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Book" asp-action="Index" class="btn btn-secondary border form-control">Back</a>
+                        </div>
+                        <div class="flex-grow-1"></div>
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control border">
+                                @(Model.Book.Id == 0 ? "Create" : "Update")
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-3">
+                <label class="p-1 ps-2 text-muted text-center" style="font-weight:bold">Front Cover</label>
+                @if (Model.Book.Images is not null
+                && Model.Book.Images.Where(i => i.ImageType == BookImageType.FrontCover).Any())
+                {
+                    foreach (var image in Model.Book.Images.Where(i => i.ImageType == BookImageType.FrontCover))
+                    {
+                        <div class="text-center">
+                            <img src="@image.Url" width="100%" class="mb-1"
+                                 style="border-radius:5px; border:1px solid #bbb9b9" />
+                            <a asp-controller="Book" asp-action="DeleteImage" width="100%" class="btn btn-danger mb-2" asp-route-imageId="@image.Id">
+                                <i class="bi bi-trash-fill"></i> Remove
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <form id="fileForm" asp-controller="Book" asp-action="AddImage" method="post"
+                          asp-route-imageType="FrontCover" asp-route-bookId="@Model.Book.Id" enctype="multipart/form-data">
+                        <div class="row p-1 mb-4">
+                            <input id="fileInput" type="file" name="file" class="form-control border" />
+                        </div>
+                    </form>
+                }
+                <label class="p-1 ps-2 text-muted text-center" style="font-weight:bold">Back Cover</label>
+                @if (Model.Book.Images is not null
+                && Model.Book.Images.Where(i => i.ImageType == BookImageType.BackCover).Any())
+                {
+                    foreach (var image in Model.Book.Images.Where(i => i.ImageType == BookImageType.BackCover))
+                    {
+                        <div class="text-center">
+                            <img src="@image.Url" width="100%" class="mb-1"
+                                 style="border-radius:5px; border:1px solid #bbb9b9" />
+                            <a asp-controller="Book" asp-action="DeleteImage" width="100%" class="btn btn-danger mb-2" asp-route-imageId="@image.Id">
+                                <i class="bi bi-trash-fill"></i> Remove
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <form id="fileForm" asp-controller="Book" asp-action="AddImage" method="post"
+                          asp-route-imageType="BackCover" asp-route-bookId="@Model.Book.Id" enctype="multipart/form-data">
+                        <div class="row p-1 mb-4">
+                            <input id="fileInput" type="file" name="file" class="form-control border" />
+                        </div>
+                    </form>
+                }
+            </div>
+         </div>
+    </div>
+</div>
+
+<partial name="_ExtraSpace" />
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#fileInput').change(function () {
+                $('#fileForm').submit();
+            });
+        });
+    </script>,
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons lists visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial"/> 
+    }
+}
+
+                        

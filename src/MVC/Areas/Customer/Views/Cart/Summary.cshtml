@@ -1,0 +1,120 @@
+﻿@model ShoppingCartVM
+
+<form method="post" class="mb-5">
+	<br />
+	<div class="container">
+		<div class="card shadow border-0">
+
+			<div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
+				<div class="row">
+					<div class="col-12">
+						<h2 class="pt-2 text-white text-center">
+							Order Summary
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="container rounded p-2">
+					<div class="row">
+						<div class="col-12 col-lg-6 pb-4">
+							<div class="row">
+								<h4 class="d-flex justify-content-between align-items-center mb-3">
+									<span class="text-dark-emphasis fw-bold">Shipping Details:</span>
+								</h4>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Name</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="Order.Customer.Name" class="form-control" />
+									<span asp-validation-for="Order.Customer.Name" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Country</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="Order.Shipping.ShippingAddress.Country" class="form-control" />
+									<span asp-validation-for="Order.Shipping.ShippingAddress.Country" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>City</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="Order.Shipping.ShippingAddress.City" class="form-control" />
+									<span asp-validation-for="Order.Shipping.ShippingAddress.City" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Street Address</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="Order.Shipping.ShippingAddress.StreetAddress" class="form-control" />
+									<span asp-validation-for="Order.Shipping.ShippingAddress.StreetAddress" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Postal Code</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="Order.Shipping.ShippingAddress.PostalCode" class="form-control" />
+									<span asp-validation-for="Order.Shipping.ShippingAddress.PostalCode" class="text-danger"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-5 offset-lg-1">
+							<h4 class="d-flex justify-content-between align-items-center mb-3">
+								<span class="text-dark-emphasis fw-bold">Shopping Cart:</span>
+							</h4>
+							<ul class="list-group mb-3">
+								@foreach (var cart in Model.BookCarts)
+								{
+									<li class="list-group-item d-flex justify-content-between">
+										<div>
+											<h6 class="my-0">@cart.Book.Title</h6>
+											<small class="text-muted">Quantity: @cart.Count</small>
+										</div>
+										<span class="text-muted">$@cart.GetTotalPrice()</span>
+									</li>
+								}
+								<li class="list-group-item d-flex justify-content-between bg-light">
+									<small class="text-dark-emphasis fw-bold">Total</small>
+									<strong class="text-dark-emphasis fw-bold">$@Model.Order.TotalPrice</strong>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-12 col-md-12 col-lg-8 pt-3">
+						<p class="text-dark-emphasis fw-bold" font-size:14px;">
+							Estimate Arrival Date:
+							@DateTime.UtcNow.AddDays(8).ToShortDateString() - @DateTime.UtcNow.AddDays(13).ToShortDateString()
+						</p>
+					</div>
+					<div class="col-12 col-md-12 col-lg-2 pt-2">
+						<a asp-action="Index" class="btn btn-secondary form-control">Back to Cart</a>
+					</div>
+					<div class="col-12 col-md-12 col-lg-2 pt-2">
+						<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<partial name="_ExtraSpace" />
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
